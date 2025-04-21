@@ -1,4 +1,4 @@
 #!/bin/bash
 
-sudo curl https://raw.githubusercontent.com/FrankWhoee/reboot-primer/refs/heads/main/rbt >> /usr/local/bin/rbt
+sudo curl https://raw.githubusercontent.com/FrankWhoee/reboot-primer/refs/heads/main/rbt -o /usr/local/bin/rbt
 sudo chmod +x /usr/local/bin/rbt

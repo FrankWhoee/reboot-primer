@@ -1,5 +1,8 @@
+#!/bin/bash
+
 if [ $# -eq 0 ]; then
-    echo "Usage: $0 <menuentry>"
+    echo "Usage: rbt <menuentry> <--editonly> <-e>"
+    echo "Use --editonly or -e to edit the grub entry without rebooting."
     exit 1
 fi
 
@@ -14,5 +17,18 @@ ESCAPED_ENTRY=$(printf '%s\n' "$ENTRY" | sed -e 's/[\/&]/\\&/g')
 
 sed -i "s/GRUB_DEFAULT=.*/GRUB_DEFAULT='$ESCAPED_ENTRY'/" /etc/default/grub
 
+if [ $? -eq 0 ]; then
+    echo "Grub configuration updated successfully."
+else
+    echo "Failed to update grub configuration."
+    exit 1
+fi
+
 update-grub
 
+if [[ \ $*\  == *\ --editonly\ * ]] || [[ \ $*\  == *\ -e\ * ]]; then
+    echo "Edit only mode, no reboot. Use without flag to reboot."
+else
+    echo "Rebooting..."
+    reboot
+fi
